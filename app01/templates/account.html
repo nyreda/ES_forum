@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <title>账户管理</title>
+    <script>
+        function alert() {
+            var x;
+            var r = confirm("确定要注销账号吗？这将删除你的的所有信息！");
+            if (r == true) {
+                window.location.href = "/write_off/account/";
+            }
+        }
+    </script>
+
+{#    <div>#}
+{##}
+{#        <form method="post" novalidate class=".form-group"#}
+{#              style="position: absolute; width: 50%;top: 40%; left: 50%; transform: translate(-50%,-50%);">#}
+{#            <h3>我的账户</h3>#}
+{##}
+{#            <table class="table table-bordered" style="width: 250%" ;>#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>ID</th>#}
+{#                    <th>昵称</th>#}
+{#                    <th>邮箱</th>#}
+{#                    <th>密码</th>#}
+{#                    <th>操作</th>#}
+{#                </tr>#}
+{#                </thead>#}
+{##}
+{#                <tr>#}
+{#                    <th>{{ queryset.id }}</th>#}
+{#                    <td>{{ queryset.name }}</td>#}
+{#                    <td>{{ queryset.email }}</td>#}
+{#                    <td>{{ queryset.password }}</td>#}
+{##}
+{#                    <td>#}
+{#                        <!--<a class="btn btn-primary btn-xs" href="#">编辑</a>-->#}
+{#                        <a href="/edit/{{ queryset.id }}/account/" class="btn btn-primary btn-sm">编辑信息</a>#}
+{#                        <a href="" class="btn btn-primary btn-sm">评论管理</a>#}
+{#                        <a href="/quit/account/" class="btn btn-warning btn-sm">退出登录</a>#}
+{#                        <a onclick="alert()" class="btn btn-danger btn-sm">注销账户</a>#}
+{#                        <!--<button onclick="alert()" class="btn btn-danger btn-sm">注销账户</button>-->#}
+{##}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#            <a href="/home/" class="btn btn-default">返回</a>#}
+{#        </form>#}
+{#    </div>#}
+      <div class="container">
+    <h3 class="text-center">个人信息</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <td class="info-label">昵称</td>
+            <td>{{ queryset.id }}</td>
+          </tr>
+          <tr>
+            <td class="info-label">邮箱</td>
+            <td>{{ queryset.email }}</td>
+          </tr>
+          <tr>
+            <td class="info-label">密码</td>
+            <td>{{ queryset.password }}</td>
+          </tr>
+        </tbody>
+      </table>
+        <!--<a class="btn btn-primary btn-xs" href="#">编辑</a>-->
+            <a href="/edit/{{ queryset.id }}/account/" class="btn btn-primary btn-sm">编辑信息</a>
+            <a onclick="alert()" class="btn btn-danger btn-sm">注销账户</a>
+            <!--<button onclick="alert()" class="btn btn-danger btn-sm">注销账户</button>-->
+    </div>
+  </div>
+{% endblock %}
+
+

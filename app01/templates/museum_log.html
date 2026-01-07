@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <title>日志管理</title>
+    <br><br>
+    <div class="col-md-4">
+        <div class="container">
+            <div class="panel panel-info">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    更新日志
+                </div>
+
+                <!-- Table -->
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>版本号</th>
+                        <th>时间</th>
+                        <th>内容</th>
+                        <th>开发者</th>
+                    </tr>
+                    </thead>
+                    {% for obj in queryset %}
+
+                        <tbody>
+                        <tr>
+                            <td>{{ obj.version_num }}</td>
+                            <td>{{ obj.publishTime }}</td>
+                            <td>{{ obj.substance|linebreaksbr }}</td>
+                            <td>{{ obj.get_developer_display }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix">
+                <ul class="pagination">
+                    {{ page_string }}
+                </ul>
+            </div>
+            <a class="btn btn-default" href="/forum/0/category">返回</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+<!--
+为什么这个页面的css显得特别奇怪呢？
+因为这个项目同时用到了bootstrap3和bootstrap4，为了保证兼容性做了一些调整。。。水平有限，时间有限，先做成这样以后再改吧。。。。
+-->
+
+{% block content %}
+
+    <main role="main">
+        <title>论坛管理</title>
+        <style>
+            .list-group-item-main:hover {
+                color: #008CBA;
+                -webkit-transition: all 0.2s;
+                transition: all 0.2s;
+            }
+
+            .nav-item {
+                list-style: none;
+            }
+
+            .nav-link {
+                color: #1d2124;
+                display: block;
+                padding: 0.5rem 1rem;
+            }
+
+            /* line 17, node_modules/bootstrap/scss/mixins/_hover.scss */
+            .nav-link:hover, .nav-link:focus {
+                text-decoration: none;
+            }
+
+        </style>
+        {#    <link rel="stylesheet" href="{% static 'css/forum_app.css' %}">#}
+        {#    <link rel="stylesheet" href="{% static 'css/forum_theme.css' %}">#}
+
+
+        <section class="mt-4 mb-5">
+            <div class="container mb-4">
+                <h1 class="font-weight-bold title">论坛管理</h1>
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-white pl-2 pr-2">
+                        {#        <button class="navbar-light navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExplore" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">#}
+                        {#        <span class="navbar-toggler-icon"></span>#}
+                        {#        </button>#}
+                        <div class="collapse navbar-collapse " id="navbarsExplore">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/1/forum/">待审核帖子</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/2/forum/">已发布帖子</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/3/forum/">待审核评论</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/4/forum/">已发布评论</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-10 offset-md-0">
+                        <section class="content-section">
+                            <div class="list-group">
+                                <!--<a href="#" class="list-group-item active">
+                                  <h4 class="list-group-item-heading">List group item heading</h4>
+                                  <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                </a>-->
+                                {% for obj in queryset %}
+                                    <div class="list-group-item-main">
+                                        <a href="/forum/{{ obj.id }}/passage/">
+                                            <div href="" class="list-group-item">
+                                                <h4 class="list-group-item-heading"
+                                                    style="color: #1a1a1a;font-size: 24px">{{ obj.title }}</h4>
+                                                <small style="color: #1a1a1a">{{ obj.username }}
+                                                    &nbsp&nbsp{{ obj.publishDate }}</small>
+                                                <p class="list-group-item-text"
+                                                   style="color: #1a1a1a;font-size: 16px">{{ obj.content }}</p>
+                                                <div class="btn-group" role="group" aria-label="...">
+                                                    <a href="/admin/forum/{{ obj.id }}/1/psg/" class="btn btn-default">通过</a>
+                                                    <a href="/admin/forum/{{ obj.id }}/0/psg/" class="btn btn-default">不通过</a>
+                                                    {#                      <a type="button" class="btn btn-default">Right</a>#}
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+                                {% endfor %}
+                                <!-- 添加更多帖子 -->
+                            </div>
+                        </section>
+
+                        <div class="clearfix"><!--分页组件-->
+                            <ul class="pagination">
+                                {{ page_string }}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+{% endblock %}
+
+
+

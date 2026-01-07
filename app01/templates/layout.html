@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/icon.ico' %}"/>
+    <!--<script src="{% static 'plugins/jquery-ui-1.13.1/jquery-ui.min.js' %}"></script>-->
+    <script src="{% static 'plugins/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+
+
+    {% block css %}{% endblock %}
+</head>
+<body>
+<div>
+    {% block content %}{% endblock %}
+
+
+</div>
+<p class="text-center" style="        position: absolute;
+		font-size: 0.75px;
+		color: #a0a2a0;
+		line-height: 30px;
+		letter-spacing:1px;
+		top: 92%;
+        left: 30%;bottom: 0px">Copyright © 2022-2023 All rights reserved | This template was made by <a
+        style="color: #147dbf" href="/contact_us/">wezy</a></p>
+
+{% block js %}{% endblock %}
+</body>
+</html>

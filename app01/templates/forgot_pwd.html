@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% load static %}
+    <title>找回密码</title>
+    <form id="biao_dan" novalidate class=".form-group"
+          style="position: absolute; width: 50%;top: 40%; left: 50%; transform: translate(-50%,-50%);">
+        <h3>找回密码</h3>
+        {% csrf_token %}
+        <!--邮箱验证码输入框-->
+        <div class="form-group">
+            <div>
+                <label for="exampleInputEmail1">邮箱</label>
+                {{ form.email }}
+                <span style="color: red;">{{ form.email.errors.0 }}</span>
+                <!--<input name="verify" class="form-control" placeholder="邮箱">-->
+                <input id="get_code" type="button" class="btn btn-link" value="发送邮箱验证码"></input>
+                <!--<a href="/forgot/pwd/code/" target="_blank" class="btn btn-link">发送邮箱验证码</a>-->
+                <!--<button id="get_code" type="button" class="btn btn-link">发送邮箱验证码</button>-->
+
+                <span style="color: red;" id="warning" class="error_msg"></span>
+                <span style="color: rgb(19,192,83);" id="success" class="error_msg"></span>
+            </div>
+            <div>
+                <label for="exampleInputEmail1">邮箱验证码</label>
+                <input name="verify" class="form-control" placeholder="邮箱验证码">
+                <span style="color: red;" class="error_msg">{{ msg_warn }}</span>
+            </div>
+            <br>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">新密码</label>
+                {{ form.password }}
+                <span style="color: red;">{{ form.password.errors.0 }}</span>
+                <!--<input name="name" type="email" class="form-control" id="exampleInputEmail1" placeholder="Name">-->
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">确认新密码</label>
+                {{ form.confirm_password }}
+                <span style="color: red;">{{ form.confirm_password.errors.0 }}</span>
+                <!--<input name="name" type="email" class="form-control" id="exampleInputEmail1" placeholder="Name">-->
+            </div>
+
+            <button type="submit" id="submit_btn" class="btn btn-default">提交</button>
+            <a href="/login/" class="btn btn-default">返回</a>
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block js %}
+    <script>        //ajax
+    $(function () {
+        //页面框架加载完成后自动执行
+        getCodeEvent();
+        submitEvent();
+    })
+
+    function getCodeEvent() {
+        $("#get_code").click(function () {
+            //计时函数
+            var obj = document.getElementById("get_code")
+            obj.disabled = true;    //设置不可点击
+            //obj.href = "javascript:void(0);";       //保证兼容性
+            let i = 60  // 倒计时秒数
+            // 定时器 每隔一秒变化一次（1000ms = 1s）
+            let t = setInterval(countDown, 1000);
+
+            function countDown() {
+                //console.log(i);
+                obj.value = i + "秒后可重新点击";
+                i--;
+                // 60 秒倒计时结束
+                if (i <= 0) {
+                    //console.log("倒计时结束")
+                    //clearInterval(t);
+                    obj.value = "发送邮箱验证码";
+                    obj.disabled = false;
+                    clearInterval(t);   //关闭计时器
+                }
+            }
+
+            $(".error_msg").empty();    //清空所有报错信息
+            $.ajax({
+                url: '/forgot/pwd/code/',
+                type: "post",
+                data: $("#biao_dan").serialize(),
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.msg_warn == "邮箱不存在！") {
+                        document.getElementById("warning").innerHTML = res.msg_warn;
+                    } else if (res.msg_success == "邮箱验证码发送成功！") {
+                        document.getElementById("success").innerHTML = res.msg_success;
+                    } else {      //数据非法
+                        $.each(res.error, function (name, data) {
+                            $("#id_" + name).next().text(data[0]);
+                        })
+
+                    }
+                }
+            })
+        })
+    }
+
+    function submitEvent() {     //在用户单击提交的时候把input的method属性改为post
+        $("#submit_btn").click(function () {
+            document.getElementById("biao_dan").method = "post";
+            $("#biao_dan").submit();
+        })
+    }
+    </script>
+{% endblock %}
+
+
+
+

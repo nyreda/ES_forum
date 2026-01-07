@@ -1,0 +1,34 @@
+{% extends 'admin_layout.html' %}
+{% block content %}
+    <section class="mt-4 mb-5">
+        <div class="container mb-4">
+            <div>
+                {% for obj in queryset %}
+                    <div class="list-group-item-main">
+                        <a href="/forum/{{ obj.id }}/passage/">
+                            <div class="list-group-item">
+                                <a href="/forum/{{ obj.id }}/delete/">
+                                    <button style="float: right" type="button" class="btn btn-danger">删除</button>
+                                </a>
+                                <h4 class="list-group-item-heading">{{ obj.title }}</h4>
+                                <small>{{ obj.username }} &nbsp&nbsp{{ obj.publishDate }}</small>
+                                <p class="list-group-item-text">{{ obj.content }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    <br>
+                {% endfor %}
+
+                <div class="clearfix"><!--分页组件-->
+                    <ul class="pagination">
+                        {{ page_string }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </main>
+
+        </div>
+    </section>
+
+{% endblock %}

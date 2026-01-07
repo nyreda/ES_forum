@@ -1,0 +1,17 @@
+# ==== Python ====
+__pycache__/
+
+# ==== Virtual Environments ====
+.venv/
+
+# ==== PyCharm ====
+.idea/
+
+# ==== macOS ====
+.DS_Store
+
+# ==== pyenv ====
+.python-version
+
+# ==== Django ====
+db.sqlite3

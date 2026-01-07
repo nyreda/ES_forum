@@ -1,0 +1,28 @@
+{% extends 'admin_layout.html' %}
+{% block content %}
+    <title>管理员面板</title>
+
+    <div class="col-md-8 col-md-offset-2">
+        <br>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <a><h3 class="panel-title">管理员面板</h3></a>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="/admin/user_list/" class="list-group-item">用户管理</a>
+                    <a href="/admin/log/" class="list-group-item">日志管理</a>
+                    <a href="/forum/0/category/" class="list-group-item">论坛主页</a>
+                    <a href="/admin/1/forum/" class="list-group-item">论坛管理</a>
+                    <a href="#" class="list-group-item">未完待续..</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+

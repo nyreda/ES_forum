@@ -1,0 +1,46 @@
+{% extends 'forum_layout.html' %}
+{% block content %}
+    <style>
+        .list-group-item1 {
+            position: relative;
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+        }
+    </style>
+    <section class="mt-4 mb-5">
+        <div class="container mb-4">
+            <h4>发布帖子</h4>
+            <div href="#" class="list-group-item1">
+                <form novalidate action="" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label style="font-weight: bold">标题</label>
+                        {{ form.title }}
+                        <span style="color: red;">{{ form.title.errors.0 }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold">内容</label>
+                        {{ form.content }}
+                        <span style="color: red;">{{ form.content.errors.0 }}</span>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">提交</button>
+                    {#                  <div class="input-group-prepend">#}
+                    {#                    <span class="input-group-text">发表评论</span>#}
+                    {#                  </div>#}
+                    {#                  <textarea class="form-control" aria-label="With textarea"></textarea>#}
+                    {#                  <div class="input-group-append">#}
+                    {#                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">提交</button>#}
+                    {#              </div>#}
+                </form>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'admin_layout.html' %}
+{% block content %}
+    <title>日志管理</title>
+    <div class="col-md-4">
+        <div class="container">
+
+            <div style="margin-bottom: 10px">
+                <a class="btn btn-success" href="/admin/creat_log/">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    新建日志
+                </a>
+
+            </div>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    日志管理
+                </div>
+
+                <!-- Table -->
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>版本号</th>
+                        <th>时间</th>
+                        <th>内容</th>
+                        <th>开发者</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    {% for obj in queryset %}
+
+                        <tbody>
+                        <tr>
+                            <td>{{ obj.id }}</td>
+                            <td>{{ obj.version_num }}</td>
+                            <td>{{ obj.publishTime }}</td>
+                            <td>{{ obj.substance|linebreaksbr }}</td>
+                            <td>{{ obj.get_developer_display }}</td>
+                            <td>
+                                <a href="/admin/{{ obj.id }}/log_edit/" class="btn btn-primary btn-xs" href="#">编辑</a>
+                                <a href="/admin/{{ obj.id }}/log_delete/" class="btn btn-danger btn-xs">删除</a>
+                                <!--<a href="/quit/account/" class="btn btn-warning btn-sm">退出登录</a>-->
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix">
+                <ul class="pagination">
+                    {{ page_string }}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

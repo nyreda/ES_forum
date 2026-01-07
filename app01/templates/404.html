@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <br/><br/>
+        <h1>404 Not Found</h1>
+        <h3>真刀灵，没有这个页面，你得注意一下~</h3>
+        <h4>当前出错的链接为<p class="btn btn-link btn-lg">{{ request.path_info }}</p></h4>
+
+        <h4>也许你可以访问这些...</h4>
+        <a href="/home/" class="list-group-item"></a>
+<!--         <a href="/history/content/" class="list-group-item">二班史册</a>
+        <a href="#" class="list-group-item">发布评论</a>
+        <a href="/museum/" class="list-group-item">纪念馆</a> -->
+
+        <!--
+        <a href="/home/" class="btn btn-link btn-lg">主页</a>
+        <a href="#" class="btn btn-link btn-lg">二班史册</a>
+        <a href="#" class="btn btn-link btn-lg">发布评论</a>
+        <a href="#" class="btn btn-link btn-lg">纪念馆</a>
+        -->
+
+    </div>
+{% endblock %}

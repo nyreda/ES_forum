@@ -1,0 +1,78 @@
+{% extends 'forum_layout.html' %}
+{% block content %}
+    <style>
+        .list-group-item1 {
+            position: relative;
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+        }
+    </style>
+
+
+    <title>{{ passage_obj.title }}</title>
+    <section class="mt-4 mb-5">
+        <div class="container mb-4">
+            <h3 class="font-weight-bold title">{{ passage_obj.title }}</h3>
+            <div class="row">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white pl-2 pr-2">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="/forum/{{ passage_obj.user }}/author/">{{ passage_obj.author }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ passage_obj.publishDate }}</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+            <div href="#" class="list-group-item1">
+                <p class="list-group-item-text">{{ passage_obj.content|linebreaksbr }}</p>
+            </div>
+            <br>
+
+            <div href="#" class="list-group-item1">
+                <h5>评论</h5>
+                {% for cmt_obj in comments_obj %}
+                    <hr class="my-4">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-white pl-2 pr-2">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="/forum/{{ cmt_obj.user }}/author/"><h6>{{ cmt_obj.cmt_user }}</h6></a>
+                            </li>
+                            <li class="nav-item">
+                                <div style="color: rgb(178,178,178)"><small>&nbsp&nbsp{{ cmt_obj.publishDate }}</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="list-group-item-text">{{ cmt_obj.content|linebreaksbr }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <form novalidate method="post">
+                <div class="input-group">
+                    {% csrf_token %}
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">发表评论</span>
+                    </div>
+                    {{ form.content }}
+                    {#                  <textarea class="form-control" aria-label="With textarea"></textarea>#}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">提交</button>
+                    </div>
+                </div>
+                <span style="color: red;">{{ form.content.errors.0 }}</span>
+
+            </form>
+
+        </div>
+    </section>
+
+
+
+{% endblock %}

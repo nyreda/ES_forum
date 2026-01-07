@@ -1,0 +1,49 @@
+{% extends 'forum_layout.html' %}
+{% block content %}
+    <title>我的主页</title>
+    <section class="mt-4 mb-5">
+        <div class="container mb-4">
+            <h2 class="font-weight-bold title">我的主页</h2>
+            <a href="/account/" class="btn btn-outline-secondary">个人信息</a>
+            <a href="/account/" class="btn btn-outline-secondary">退出登录</a>
+            <p><!--个签--></p>
+
+            <div>
+                {% for obj in queryset %}
+                    <div class="list-group-item-main">
+                        <div class="list-group-item">
+                            <a style="float: right" class="btn btn-outline-danger" href="/forum/{{ obj.id }}/delete/">
+                                删除
+                            </a>
+                            <a href="/forum/{{ obj.id }}/passage/">
+                                <span href="#" class="badge badge-secondary">{{ obj.get_status_display }}</span>
+                                <h4 class="list-group-item-heading">{{ obj.title }}</h4>
+                                <small>{{ obj.username }} &nbsp&nbsp{{ obj.publishDate }}</small>
+                                <p class="list-group-item-text">{{ obj.content }}</p>
+                            </a>
+                        </div>
+
+                    </div>
+                    <br>
+                {% endfor %}
+
+                <div class="clearfix"><!--分页组件-->
+                    <ul class="pagination">
+                        {{ page_string }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        </main>
+
+        </div>
+    </section>
+    <script>
+    function click(){
+        console.log("1")
+    }
+    </script>
+
+{% endblock %}

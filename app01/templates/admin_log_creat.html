@@ -1,0 +1,30 @@
+{% extends 'admin_layout.html' %}
+{% block content %}
+    {% load static %}
+    <title>新建日志</title>
+    <div style="position: relative; width: 50%;top: 250px; left: 50%; transform: translate(-50%,-50%);">
+        <form id="biao_dan" method="post" novalidate class=".form-group">
+            <!--<form id="biao_dan" action="/send_sms_code/" method="post" novalidate class=".form-group" style="position: absolute; width: 50%;top: 40%; left: 50%; transform: translate(-50%,-50%);">-->
+            <h3>新建日志</h3>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group" style="position: relative;">
+                    <label for="exampleInputEmail1">{{ field.label }}</label>
+                    {{ field }}
+                    <span style="color: red;" class="error_msg" style="position: absolute;"></span>
+                    <!--<input name="name" type="email" class="form-control" id="exampleInputEmail1" placeholder="Name">-->
+                </div>
+            {% endfor %}
+            <!--<button type="submit" onclick="change_action()" class="btn btn-default">提交</button>-->
+            <input type="submit" id="submit_btn" class="btn btn-default">
+        </form>
+    </div>
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+
+

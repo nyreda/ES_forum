@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% load static %}
+    <title xmlns="http://www.w3.org/1999/html">注册</title>
+    <div style="position: absolute; width: 50%;top: 40%; left: 50%; transform: translate(-50%,-50%);">
+    <form id="biao_dan" novalidate class=".form-group">
+        <!--<form id="biao_dan" action="/send_sms_code/" method="post" novalidate class=".form-group" style="position: absolute; width: 50%;top: 40%; left: 50%; transform: translate(-50%,-50%);">-->
+        <h3>注册</h3>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group" style="position: relative;">
+                <label for="exampleInputEmail1">{{ field.label }}</label>
+                {{ field }}
+                <span style="color: red;" class="error_msg" style="position: absolute;"></span>
+                <!--<input name="name" type="email" class="form-control" id="exampleInputEmail1" placeholder="Name">-->
+            </div>
+        {% endfor %}
+
+        <!--邮箱验证码输入框-->
+        <div class="form-group">
+            <div>
+                <label for="exampleInputEmail1">邮箱验证码</label>
+                <input name="verify" class="form-control" placeholder="邮箱验证码">
+                <!--<a href="/send_sms_code/" target="_blank" class=".btn-primary">发送邮箱验证码</a>-->
+                <input id="get_code" type="button" class="btn btn-link" value="发送邮箱验证码"></input>
+                <!--<button id="get_code" type="button" class="btn btn-link">发送邮箱验证码</button>-->
+            </div>
+        </div>
+        <!--<button type="submit" onclick="change_action()" class="btn btn-default">提交</button>-->
+        <input type="submit" id="submit_btn" class="btn btn-default"></input>
+        <a href="/login/" class="btn btn-default">去登录</a>
+        <a href="/home/" class="btn btn-default">去主页</a>
+        <span style="color: red;" id="warning" class="error_msg"></span>
+        <span style="color: red;" class="error_msg">{{ msg_warn }}</span>
+        <span style="color: rgb(19,192,83);" id="success" class="error_msg"></span>
+    </form>
+
+{% endblock %}
+{% block js %}
+    <script>        //ajax
+    $(function () {
+        //页面框架加载完成后自动执行
+        getCodeEvent();
+        submitEvent();
+    })
+
+    function getCodeEvent() {
+        $("#get_code").click(function () {
+            //计时函数
+            var obj = document.getElementById("get_code")
+            obj.disabled = true;    //设置不可点击
+            //obj.href = "javascript:void(0);";       //保证兼容性
+            let i = 60  // 倒计时秒数
+            // 定时器 每隔一秒变化一次（1000ms = 1s）
+            let t = setInterval(countDown, 1000);
+
+            function countDown() {
+                //console.log(i);
+                obj.value = i + "秒后可重新点击";
+                i--;
+                // 60 秒倒计时结束
+                if (i <= 0) {
+                    //console.log("倒计时结束")
+                    //clearInterval(t);
+                    obj.value = "发送邮箱验证码";
+                    obj.disabled = false;
+                    clearInterval(t);   //关闭计时器
+                }
+            }
+
+
+            $(".error_msg").empty();    //清空所有报错信息
+            $.ajax({
+                url: '/send_sms_code/',
+                type: "post",
+                data: $("#biao_dan").serialize(),
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.msg_warn == "邮箱已经被注册过！") {
+                        document.getElementById("warning").innerHTML = res.msg_warn;
+                    } else if (res.msg_success == "邮箱验证码发送成功！") {
+                        document.getElementById("success").innerHTML = res.msg_success;
+                    } else {      //数据非法
+                        $.each(res.error, function (name, data) {
+                            $("#id_" + name).next().text(data[0]);       //谢谢，这是什么已经看不懂了
+                        })
+
+                    }
+                }
+            })
+        })
+    }
+
+    function submitEvent() {     //在用户单击提交的时候把input的method属性改为post
+        $("#submit_btn").click(function () {
+            document.getElementById("biao_dan").method = "post";
+            $("#biao_dan").submit();
+        })
+    }
+    </script>
+{% endblock %}
+
+
+</div>
+
+
